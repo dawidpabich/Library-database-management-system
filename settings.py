@@ -55,24 +55,21 @@ class UserInterface:
     def add_record_tree_node(self):
         with dpg.tree_node(label="Add record"):
             with dpg.tree_node(label="Add book "):
-                dpg.add_input_text(label="Book ID", tag="book.book_ID", width=120, decimal=True, no_spaces=True)
-                dpg.add_input_text(label="Author ID", tag="book.author_ID", width=120, decimal=True, no_spaces=True)
-                dpg.add_input_text(label="Publisher ID", tag="book.publisher_ID", width=120, decimal=True, no_spaces=True)
-                dpg.add_input_text(label="Title", tag="book.title_ID", width=120)
-                dpg.add_input_text(label="Genre", tag="book.genre_ID", width=120)
+                dpg.add_input_text(label="Book ID", tag="add_book.book_ID", width=120, decimal=True, no_spaces=True)
+                dpg.add_input_text(label="Author ID", tag="add_book.author_ID", width=120, decimal=True, no_spaces=True)
+                dpg.add_input_text(label="Publisher ID", tag="add_book.publisher_ID", width=120, decimal=True, no_spaces=True)
+                dpg.add_input_text(label="Title", tag="add_book.title_ID", width=120)
+                dpg.add_input_text(label="Genre", tag="add_book.genre_ID", width=120)
                 dpg.add_button(label="Confirm", callback=self.add.add_book)
 
             with dpg.tree_node(label="Add borrowed book "):
-                dpg.add_input_text(label="Borrow ID", tag="add_borrowed_book.borrow_ID", width=120, decimal=True,
-                                   no_spaces=True)
-                dpg.add_input_text(label="Book ID", tag="add_borrowed_book.book_ID", width=120, decimal=True,
-                                   no_spaces=True)
-                dpg.add_input_text(label="Borrower ID", tag="add_borrowed_book.borrower_ID", width=120, decimal=True,
-                                   no_spaces=True)
+                dpg.add_input_text(label="Borrow ID", tag="add_borrowed_book.borrow_ID", width=120, decimal=True, no_spaces=True)
+                dpg.add_input_text(label="Book ID", tag="add_borrowed_book.book_ID", width=120, decimal=True, no_spaces=True)
+                dpg.add_input_text(label="Borrower ID", tag="add_borrowed_book.borrower_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_button(label="Confirm", callback=self.add.add_borrowed_book)
 
             with dpg.tree_node(label="Add borrower "):
-                dpg.add_input_text(label="Borrower ID", tag="add_borrower.borrower_ID", width=120)
+                dpg.add_input_text(label="Borrower ID", tag="add_borrower.borrower_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_input_text(label="First name", tag="add_borrower.first_name", width=120)
                 dpg.add_input_text(label="Last name", tag="add_borrower.last_name", width=120)
                 dpg.add_input_text(label="Address", tag="add_borrower.address", width=120)
@@ -80,7 +77,7 @@ class UserInterface:
                 dpg.add_button(label="Confirm", callback=self.add.add_borrower)
 
             with dpg.tree_node(label="Add publisher"):
-                dpg.add_input_text(label="Publisher ID", tag="add_publisher.publisher_ID", width=120)
+                dpg.add_input_text(label="Publisher ID", tag="add_publisher.publisher_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_input_text(label="Name", tag="add_publisher.publisher_name", width=120)
                 dpg.add_input_text(label="Address", tag="add_publisher.address", width=120)
                 dpg.add_input_text(label="Phone", tag="add_publisher.phone", width=120)
@@ -94,17 +91,14 @@ class UserInterface:
 
     def update_record_tree_node(self):
         with dpg.tree_node(label="Update record"):
-
             with dpg.tree_node(label="Update book"):
-                dpg.add_input_text(label="ID of the book to update", tag="update_book.book_ID", width=120,
-                                   decimal=True, no_spaces=True)
+                dpg.add_input_text(label="ID of the book to update", tag="update_book.book_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_input_text(label="New first name", tag="update_book.title", width=120)
                 dpg.add_input_text(label="New last name", tag="update_book.genre", width=120)
                 dpg.add_button(label="Confirm", callback=self.update.update_book)
 
             with dpg.tree_node(label="Update borrower"):
-                dpg.add_input_text(label="ID of the borrower to update", tag="update_borrower.borrower_ID", width=120,
-                                   decimal=True, no_spaces=True)
+                dpg.add_input_text(label="ID of the borrower to update", tag="update_borrower.borrower_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_input_text(label="New first name", tag="update_borrower.first_name", width=120)
                 dpg.add_input_text(label="New last name", tag="update_borrower.last_name", width=120)
                 dpg.add_input_text(label="New address", tag="update_borrower.address", width=120)
@@ -112,16 +106,14 @@ class UserInterface:
                 dpg.add_button(label="Confirm", callback=self.update.update_borrower)
 
             with dpg.tree_node(label="Update publisher"):
-                dpg.add_input_text(label="ID of the publisher to update", tag="update_publisher.publisher_ID", width=120,
-                                   decimal=True, no_spaces=True)
+                dpg.add_input_text(label="ID of the publisher to update", tag="update_publisher.publisher_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_input_text(label="New name", tag="update_publisher.name", width=120)
                 dpg.add_input_text(label="New address", tag="update_publisher.address", width=120)
                 dpg.add_input_text(label="New phone", tag="update_publisher.phone", width=120)
                 dpg.add_button(label="Confirm", callback=self.update.update_publisher)
 
             with dpg.tree_node(label="Update author"):
-                dpg.add_input_text(label="ID of the author to update", tag="update_author.author_ID", width=120,
-                                   decimal=True, no_spaces=True)
+                dpg.add_input_text(label="ID of the author to update", tag="update_author.author_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_input_text(label="New first name", tag="update_author.first_name", width=120)
                 dpg.add_input_text(label="New last name", tag="update_author.last_name", width=120)
                 dpg.add_button(label="Confirm", callback=self.update.update_author)
@@ -130,26 +122,21 @@ class UserInterface:
         with dpg.tree_node(label="Delete record"):
 
             with dpg.tree_node(label="Delete book"):
-                dpg.add_input_text(label="Book ID", tag="delete_book.book_ID", width=120, decimal=True,
-                                   no_spaces=True)
+                dpg.add_input_text(label="Book ID", tag="delete_book.book_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_button(label="Confirm", callback=self.delete.delete_book)
 
             with dpg.tree_node(label="Delete borrow of book"):
-                dpg.add_input_text(label="Borrowed book ID", tag="delete_book_borrowed.book_borrowed_ID", width=120, decimal=True,
-                                   no_spaces=True)
+                dpg.add_input_text(label="Borrowed book ID", tag="delete_book_borrowed.book_borrowed_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_button(label="Confirm", callback=self.delete.delete_borrowed_book)
 
             with dpg.tree_node(label="Delete borrower"):
-                dpg.add_input_text(label="Borrower ID", tag="delete_borrower.borrower_ID", width=120, decimal=True,
-                                   no_spaces=True)
-                dpg.add_button(label="Confirm", width=150, height=30, callback=self.delete.delete_borrower)
+                dpg.add_input_text(label="Borrower ID", tag="delete_borrower.borrower_ID", width=120, decimal=True, no_spaces=True)
+                dpg.add_button(label="Confirm", callback=self.delete.delete_borrower)
 
             with dpg.tree_node(label="Delete publisher"):
-                dpg.add_input_text(label="Publisher ID", tag="delete_publisher.publisher_ID", width=120, decimal=True,
-                                   no_spaces=True)
+                dpg.add_input_text(label="Publisher ID", tag="delete_publisher.publisher_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_button(label="Confirm", callback=self.delete.delete_publisher)
 
             with dpg.tree_node(label="Delete author"):
-                dpg.add_input_text(label="Author ID", tag="delete_author.author_ID", width=120, decimal=True,
-                                   no_spaces=True)
+                dpg.add_input_text(label="Author ID", tag="delete_author.author_ID", width=120, decimal=True, no_spaces=True)
                 dpg.add_button(label="Confirm", callback=self.delete.delete_author)

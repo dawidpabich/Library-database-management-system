@@ -110,33 +110,33 @@ class AddRecord:
             valid_author_ID = False
             valid_publisher_ID = False
             records = session.query(Books, Authors, Publishers).join(Authors).join(Publishers).all()
-            book_to_add = Books(book_ID=dpg.get_value("book.book_ID"),
-                         author_ID=dpg.get_value("book.author_ID"),
-                         publisher_ID=dpg.get_value("book.publisher_ID"),
-                         title=dpg.get_value("book.title_ID"),
-                         genre=dpg.get_value("book.genre_ID"))
+            book_to_add = Books(book_ID=dpg.get_value("add_book.book_ID"),
+                         author_ID=dpg.get_value("add_book.author_ID"),
+                         publisher_ID=dpg.get_value("add_book.publisher_ID"),
+                         title=dpg.get_value("add_book.title_ID"),
+                         genre=dpg.get_value("add_book.genre_ID"))
 
             for value in book_to_add.__dict__.values():
                 if not value:
                     raise EmptyInput
 
             for book, author, publisher in records:
-                if book.book_ID == int(dpg.get_value("book.book_ID")):
-                    raise IDError(dpg.get_value("book.book_ID"))
-                if author.author_ID == int(dpg.get_value("book.author_ID")):
+                if book.book_ID == int(dpg.get_value("add_book.book_ID")):
+                    raise IDError(dpg.get_value("add_book.book_ID"))
+                if author.author_ID == int(dpg.get_value("add_book.author_ID")):
                     valid_author_ID = True
-                if publisher.publisher_ID == int(dpg.get_value("book.publisher_ID")):
+                if publisher.publisher_ID == int(dpg.get_value("add_book.publisher_ID")):
                     valid_publisher_ID = True
 
             if not valid_author_ID:
-                raise IDError(dpg.get_value("book.author_ID"))
+                raise IDError(dpg.get_value("add_book.author_ID"))
             elif not valid_publisher_ID:
-                raise IDError(dpg.get_value("book.publisher_ID"))
+                raise IDError(dpg.get_value("add_book.publisher_ID"))
             else:
                 session.add(book_to_add)
                 self.success_window()
+                session.commit()
 
-            #session.commit()
 
         except EmptyInput as er:
             error_window(er)
@@ -171,8 +171,8 @@ class AddRecord:
             else:
                 session.add(borrowed_book_to_add)
                 self.success_window()
+                session.commit()
 
-            #session.commit()
 
         except EmptyInput as er:
             error_window(er)
@@ -198,17 +198,13 @@ class AddRecord:
 
             session.add(borrower_to_add)
             self.success_window()
-            #session.commit()
+            session.commit()
 
         except EmptyInput as er:
             error_window(er)
 
         except IDError as er:
             error_window(er)
-
-
-        #session.commit()
-
 
     def add_publisher(self):
         try:
@@ -227,7 +223,7 @@ class AddRecord:
 
             session.add(publisher_to_add)
             self.success_window()
-            #session.commit()
+            session.commit()
 
         except EmptyInput as er:
             error_window(er)
@@ -235,14 +231,12 @@ class AddRecord:
         except IDError as er:
             error_window(er)
 
-        #session.commit()
-
     def add_author(self):
         try:
             records = session.query(Authors)
             author_to_add = Authors(author_ID=dpg.get_value("add_author.author_ID"),
-                             first_name=dpg.get_value("add_author.first_name"),
-                             last_name=dpg.get_value("add_author.last_name"))
+                                    first_name=dpg.get_value("add_author.first_name"),
+                                    last_name=dpg.get_value("add_author.last_name"))
             for value in author_to_add.__dict__.values():
                 if not value:
                     raise EmptyInput
@@ -252,7 +246,7 @@ class AddRecord:
                     raise IDError(dpg.get_value("add_author.author_ID"))
 
             session.add(author_to_add)
-            #session.commit()
+            session.commit()
 
         except EmptyInput as er:
             error_window(er)
@@ -261,7 +255,7 @@ class AddRecord:
             error_window(er)
 
 
-class DeleteRecord:  # user inputted ID must be in database
+class DeleteRecord:
     def success_window(self):
         if dpg.does_item_exist("show_window"):
             dpg.delete_item("show_window")
@@ -278,6 +272,7 @@ class DeleteRecord:  # user inputted ID must be in database
                 raise IDError(inputted_id)
 
             session.delete(result_to_delete)
+            session.commit()
             self.success_window()
 
         except IDError as er:
@@ -292,6 +287,7 @@ class DeleteRecord:  # user inputted ID must be in database
                 raise IDError(inputted_id)
 
             session.delete(result_to_delete)
+            session.commit()
             self.success_window()
 
         except IDError as er:
@@ -306,6 +302,7 @@ class DeleteRecord:  # user inputted ID must be in database
                 raise IDError(inputted_id)
 
             session.delete(result_to_delete)
+            session.commit()
             self.success_window()
 
         except IDError as er:
@@ -320,6 +317,7 @@ class DeleteRecord:  # user inputted ID must be in database
                 raise IDError(inputted_id)
 
             session.delete(result_to_delete)
+            session.commit()
             self.success_window()
 
         except IDError as er:
@@ -334,6 +332,7 @@ class DeleteRecord:  # user inputted ID must be in database
                 raise IDError(inputted_id)
 
             session.delete(result_to_delete)
+            session.commit()
             self.success_window()
 
         except IDError as er:
@@ -354,6 +353,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
 
             result_to_update.title = dpg.get_value("update_book.title")
             result_to_update.genre = dpg.get_value("update_book.genre")
+            session.commit()
 
         except IDError as er:
             error_window(er)
@@ -378,6 +378,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
             result_to_update.last_name = last_name
             result_to_update.address = address
             result_to_update.phone = phone
+            session.commit()
 
         except IDError as er:
             error_window(er)
@@ -400,6 +401,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
             result_to_update.name = name
             result_to_update.address = address
             result_to_update.phone = phone
+            session.commit()
 
         except IDError as er:
             error_window(er)
@@ -420,6 +422,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
 
             result_to_update.first_name = first_name
             result_to_update.last_name = last_name
+            session.commit()
 
         except IDError as er:
             error_window(er)
