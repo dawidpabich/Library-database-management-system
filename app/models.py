@@ -29,7 +29,6 @@ class BooksBorrowed(Base):
     borrower = relationship("Borrowers", back_populates="book_borrowed")
 
 
-# zmienic w bazie na address
 class Borrowers(Base):
     __tablename__ = 'borrowers'
     borrower_ID = db.Column(db.Integer, primary_key=True)

@@ -1,7 +1,7 @@
 import dearpygui.dearpygui as dpg
 
 
-def error_window(message):  # create window showing error message from exception
+def error_window(message):
     if dpg.does_item_exist("show_window"):
         dpg.delete_item("show_window")
     with dpg.window(tag="show_window", no_title_bar=True, no_background=False, pos=(700, 0), width=700, height=800):

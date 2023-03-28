@@ -1,19 +1,13 @@
 import dearpygui.dearpygui as dpg
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from models import Books, BooksBorrowed, Authors, Borrowers, Publishers
 from exceptions import IDError, EmptyInput, error_window
-
-
-engine = create_engine("mysql://root:Exq9LA=H@127.0.0.1:3306/library_database")
-Session = sessionmaker(bind=engine)
-session = Session()
+from database import session
 
 
 class ShowRecords:
 
     def create_table(self, records, columns, values):
-        it = 0  # tracker needed for dpg table
+        it = 0
         if dpg.does_item_exist("show_window"):
             dpg.delete_item("show_window")
 

@@ -2,8 +2,8 @@ import dearpygui.dearpygui as dpg
 from CRUD import ShowRecords, AddRecord, DeleteRecord, UpdateRecord
 from os import path
 
-ICON_PATH = path.join("icon", "book.ico")
-FONT_PATH = path.join("font", "Arialn.ttf")
+ICON_PATH = path.join("../icon", "book.ico")
+FONT_PATH = path.join("../font", "Arialn.ttf")
 
 
 class UserInterface:
@@ -14,9 +14,9 @@ class UserInterface:
 
     def __init__(self):
         dpg.create_context()
-        with dpg.font_registry():  # add new font
+        with dpg.font_registry():
             default_font = dpg.add_font(file=FONT_PATH, size=20, parent="Primary Window")
-        dpg.bind_font(default_font)  # replace original font with the new font
+        dpg.bind_font(default_font)
         dpg.create_viewport(title='Library database manager', width=1400, height=800, resizable=False, large_icon=ICON_PATH)
         dpg.setup_dearpygui()
         dpg.show_viewport()
@@ -24,7 +24,7 @@ class UserInterface:
     def __del__(self):
         dpg.destroy_context()
 
-    def window(self):  # create window containing tree nodes menu for user
+    def window(self):
         with dpg.window(tag="Primary Window"):
             dpg.set_primary_window("Primary Window", True)
             dpg.add_text("Welcome to library database manager!")
