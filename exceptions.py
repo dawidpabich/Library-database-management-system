@@ -1,5 +1,3 @@
-# exceptions
-
 import dearpygui.dearpygui as dpg
 
 

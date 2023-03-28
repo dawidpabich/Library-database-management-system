@@ -1,5 +1,3 @@
-# GUI settings
-
 import dearpygui.dearpygui as dpg
 from CRUD import ShowRecords, AddRecord, DeleteRecord, UpdateRecord
 from os import path

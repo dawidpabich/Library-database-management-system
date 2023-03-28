@@ -1,5 +1,3 @@
-# This file contains CRUD classes used by Dear PyGui callback functions
-
 import dearpygui.dearpygui as dpg
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -7,15 +5,14 @@ from models import Books, BooksBorrowed, Authors, Borrowers, Publishers
 from exceptions import IDError, EmptyInput, error_window
 
 
-# create engine and session object
 engine = create_engine("mysql://root:Exq9LA=H@127.0.0.1:3306/library_database")
 Session = sessionmaker(bind=engine)
 session = Session()
 
 
-class ShowRecords:  # callbacks for Dear PyGui buttons
+class ShowRecords:
 
-    def create_table(self, records, columns, values):  # create table that shows records
+    def create_table(self, records, columns, values):
         it = 0  # tracker needed for dpg table
         if dpg.does_item_exist("show_window"):
             dpg.delete_item("show_window")
