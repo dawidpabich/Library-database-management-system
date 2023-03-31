@@ -2,8 +2,8 @@ import dearpygui.dearpygui as dpg
 from CRUD import ShowRecords, AddRecord, DeleteRecord, UpdateRecord
 from os import path
 
-ICON_PATH = path.join("../icon", "book.ico")
-FONT_PATH = path.join("../font", "Arialn.ttf")
+ICON_PATH = path.join("icon", "book.ico")
+FONT_PATH = path.join("font", "Arialn.ttf")
 
 
 class UserInterface:
