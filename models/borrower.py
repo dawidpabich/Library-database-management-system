@@ -1,9 +1,6 @@
 import sqlalchemy as db
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime, timedelta
-
-Base = declarative_base()
+from database import Base
 
 
 class Borrower(Base):
@@ -13,4 +10,4 @@ class Borrower(Base):
     last_name = db.Column(db.String(30))
     address = db.Column(db.String(50))
     phone = db.Column(db.String(12))
-    book_borrowed=relationship("BooksBorrowed", back_populates="borrower")
+    book_borrowed=relationship("BookBorrowed", back_populates="borrower")

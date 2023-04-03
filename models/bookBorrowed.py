@@ -1,9 +1,7 @@
 import sqlalchemy as db
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timedelta
-
-Base = declarative_base()
+from database import Base
 
 
 class BookBorrowed(Base):
@@ -13,5 +11,5 @@ class BookBorrowed(Base):
     borrower_ID = db.Column(db.Integer, db.ForeignKey("borrowers.borrower_ID"))
     borrow_date = db.Column(db.Date(), default=datetime.now())
     due_date = db.Column(db.Date, default=datetime.now() + timedelta(days=100))
-    book = relationship("Books", back_populates="book_borrowed")
-    borrower = relationship("Borrowers", back_populates="book_borrowed")
+    book = relationship("Book", back_populates="book_borrowed")
+    borrower = relationship("Borrower", back_populates="book_borrowed")

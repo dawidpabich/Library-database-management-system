@@ -1,5 +1,9 @@
 import dearpygui.dearpygui as dpg
-from models import Books, BooksBorrowed, Authors, Borrowers, Publishers
+from models.bookBorrowed import BookBorrowed
+from models.author import Author
+from models.borrower import Borrower
+from models.publisher import Publisher
+from models.book import Book
 from exceptions import IDError, EmptyInput, error_window
 from database import session
 
@@ -23,7 +27,7 @@ class ShowRecords:
                             it += 1
 
     def show_books(self):
-        records = session.query(Books, Authors, Publishers).join(Authors).join(Publishers).all()
+        records = session.query(Book, Author, Publisher).join(Author).join(Publisher).all()
         columns = ["Book ID", "Author first name", "Author last name", "Publisher", "Title", "Genre"]
         values = []
         for book, author, publisher in records:
@@ -37,7 +41,7 @@ class ShowRecords:
         self.create_table(records, columns, values)
 
     def show_borrowed_books(self):
-        records = session.query(BooksBorrowed, Books, Borrowers).join(Books).join(Borrowers).all()
+        records = session.query(BookBorrowed, Book, Borrower).join(Book).join(Borrower).all()
         columns = ["Borrow ID", "Borrower ID", "First name", "Last name", "Book name", "Borrow date", "Due date"]
         values = []
         for book_borrowed, book, borrower in records:
@@ -52,7 +56,7 @@ class ShowRecords:
         self.create_table(records, columns, values)
 
     def show_borrowers(self):
-        records = session.query(Borrowers)
+        records = session.query(Borrower)
         columns = ["borrower_ID", "first_name", "last_name", "address", "phone"]
         values = []
         for borrower in records:
@@ -65,7 +69,7 @@ class ShowRecords:
         self.create_table(records, columns, values)
 
     def show_publishers(self):
-        records = session.query(Publishers)
+        records = session.query(Publisher)
         columns = ["publisher_ID", "name", "address", "phone"]
         values = []
         for publisher in records:
@@ -77,7 +81,7 @@ class ShowRecords:
         self.create_table(records, columns, values)
 
     def show_authors(self):
-        records = session.query(Authors)
+        records = session.query(Author)
         columns = ["author_ID", "first_name", "last_name"]
         values = []
         for author in records:
@@ -100,8 +104,8 @@ class AddRecord:
         try:
             valid_author_ID = False
             valid_publisher_ID = False
-            records = session.query(Books, Authors, Publishers).join(Authors).join(Publishers).all()
-            book_to_add = Books(book_ID=dpg.get_value("add_book.book_ID"),
+            records = session.query(Book, Author, Publisher).join(Author).join(Publisher).all()
+            book_to_add = Book(book_ID=dpg.get_value("add_book.book_ID"),
                          author_ID=dpg.get_value("add_book.author_ID"),
                          publisher_ID=dpg.get_value("add_book.publisher_ID"),
                          title=dpg.get_value("add_book.title_ID"),
@@ -139,8 +143,8 @@ class AddRecord:
         try:
             valid_book_ID = False
             valid_borrower_ID = False
-            records = session.query(BooksBorrowed)
-            borrowed_book_to_add = BooksBorrowed(borrow_ID=dpg.get_value("add_borrowed_book.borrow_ID"),
+            records = session.query(BookBorrowed)
+            borrowed_book_to_add = BookBorrowed(borrow_ID=dpg.get_value("add_borrowed_book.borrow_ID"),
                                           book_ID=dpg.get_value("add_borrowed_book.book_ID"),
                                           borrower_ID=dpg.get_value("add_borrowed_book.borrower_ID"))
             for value in borrowed_book_to_add.__dict__.values():
@@ -173,8 +177,8 @@ class AddRecord:
 
     def add_borrower(self):
         try:
-            records = session.query(Borrowers)
-            borrower_to_add = Borrowers(borrower_ID=dpg.get_value("add_borrower.borrower_ID"),
+            records = session.query(Borrower)
+            borrower_to_add = Borrower(borrower_ID=dpg.get_value("add_borrower.borrower_ID"),
                                  first_name=dpg.get_value("add_borrower.first_name"),
                                  last_name=dpg.get_value("add_borrower.last_name"),
                                  address=dpg.get_value("add_borrower.address"),
@@ -199,8 +203,8 @@ class AddRecord:
 
     def add_publisher(self):
         try:
-            records = session.query(Publishers)
-            publisher_to_add = Publishers(publisher_ID=dpg.get_value("add_publisher.publisher_ID"),
+            records = session.query(Publisher)
+            publisher_to_add = Publisher(publisher_ID=dpg.get_value("add_publisher.publisher_ID"),
                                    name=dpg.get_value("add_publisher.publisher_name"),
                                    address=dpg.get_value("add_publisher.address"),
                                    phone=dpg.get_value("add_publisher.phone"))
@@ -224,8 +228,8 @@ class AddRecord:
 
     def add_author(self):
         try:
-            records = session.query(Authors)
-            author_to_add = Authors(author_ID=dpg.get_value("add_author.author_ID"),
+            records = session.query(Author)
+            author_to_add = Author(author_ID=dpg.get_value("add_author.author_ID"),
                                     first_name=dpg.get_value("add_author.first_name"),
                                     last_name=dpg.get_value("add_author.last_name"))
             for value in author_to_add.__dict__.values():
@@ -257,7 +261,7 @@ class DeleteRecord:
     def delete_book(self):
         try:
             inputted_id = dpg.get_value("delete_book.book_ID")
-            result_to_delete = session.query(Books).filter(Books.book_ID == inputted_id).first()
+            result_to_delete = session.query(Book).filter(Book.book_ID == inputted_id).first()
 
             if not result_to_delete:
                 raise IDError(inputted_id)
@@ -272,7 +276,7 @@ class DeleteRecord:
     def delete_borrowed_book(self):
         try:
             inputted_id = dpg.get_value("delete_book_borrowed.book_borrowed_ID")
-            result_to_delete = session.query(BooksBorrowed).filter(BooksBorrowed.borrow_ID == inputted_id).first()
+            result_to_delete = session.query(BookBorrowed).filter(BookBorrowed.borrow_ID == inputted_id).first()
 
             if not result_to_delete:
                 raise IDError(inputted_id)
@@ -287,7 +291,7 @@ class DeleteRecord:
     def delete_borrower(self):
         try:
             inputted_id = dpg.get_value("delete_borrower.borrower_ID")
-            result_to_delete = session.query(Borrowers).filter(Borrowers.borrower_ID == inputted_id).first()
+            result_to_delete = session.query(Borrower).filter(Borrower.borrower_ID == inputted_id).first()
 
             if not result_to_delete:
                 raise IDError(inputted_id)
@@ -302,7 +306,7 @@ class DeleteRecord:
     def delete_publisher(self):
         try:
             inputted_id = dpg.get_value("delete_publisher.publisher_ID")
-            result_to_delete = session.query(Publishers).filter(Publishers.publisher_ID == inputted_id).first()
+            result_to_delete = session.query(Publisher).filter(Publisher.publisher_ID == inputted_id).first()
 
             if not result_to_delete:
                 raise IDError(inputted_id)
@@ -317,7 +321,7 @@ class DeleteRecord:
     def delete_author(self):
         try:
             inputted_id = dpg.get_value("delete_author.author_ID")
-            result_to_delete = session.query(Authors).filter(Authors.author_ID == inputted_id).first()
+            result_to_delete = session.query(Author).filter(Author.author_ID == inputted_id).first()
 
             if not result_to_delete:
                 raise IDError(inputted_id)
@@ -335,7 +339,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
     def update_book(self):
         try:
             inputted_ID = dpg.get_value("update_book.book_ID")
-            result_to_update = session.query(Books).filter(Books.book_ID == inputted_ID).first()
+            result_to_update = session.query(Book).filter(Book.book_ID == inputted_ID).first()
 
             if not result_to_update:
                 raise IDError(inputted_ID)
@@ -358,7 +362,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
             last_name = dpg.get_value("update_borrower.last_name")
             address = dpg.get_value("update_borrower.address")
             phone = dpg.get_value("update_borrower.phone")
-            result_to_update = session.query(Borrowers).filter(Borrowers.borrower_ID == inputted_ID).first()
+            result_to_update = session.query(Borrower).filter(Borrower.borrower_ID == inputted_ID).first()
 
             if not result_to_update:
                 raise IDError(inputted_ID)
@@ -382,7 +386,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
             name = dpg.get_value("update_publisher.name")
             address = dpg.get_value("update_publisher.address")
             phone = dpg.get_value("update_publisher.phone")
-            result_to_update = session.query(Publishers).filter(Publishers.publisher_ID == inputted_ID).first()
+            result_to_update = session.query(Publisher).filter(Publisher.publisher_ID == inputted_ID).first()
 
             if not result_to_update:
                 raise IDError(inputted_ID)
@@ -404,7 +408,7 @@ class UpdateRecord:  # user inputted ID must be in database and text fields cann
             inputted_ID = dpg.get_value("update_author.author_ID")
             first_name = dpg.get_value("update_author.first_name")
             last_name = dpg.get_value("update_author.last_name")
-            result_to_update = session.query(Authors).filter(Authors.author_ID == inputted_ID).first()
+            result_to_update = session.query(Author).filter(Author.author_ID == inputted_ID).first()
 
             if not result_to_update:
                 raise IDError(inputted_ID)

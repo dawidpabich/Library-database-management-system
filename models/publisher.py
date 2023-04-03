@@ -1,10 +1,6 @@
 import sqlalchemy as db
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime, timedelta
-
-Base = declarative_base()
-
+from database import Base
 
 class Publisher(Base):
     __tablename__ = 'publishers'
@@ -12,4 +8,4 @@ class Publisher(Base):
     name = db.Column(db.String(50))
     address = db.Column(db.String(50))
     phone = db.Column(db.String(12))
-    book = relationship("Books", back_populates="publisher")
+    book = relationship("Book", back_populates="publisher")
